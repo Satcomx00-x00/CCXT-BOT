@@ -1,14 +1,14 @@
 import json
-import ccxt
 import asyncio
+import ccxt.async_support as ccxt
 import time
 import logging
 import logging.config
-
+import time
 from datetime import datetime
 # import ccxt.async_support as ccxt
 import sys, os
-os.system('cls')
+os.system('clear')
 #####################LOGS INIT###########################
 # Log file location
 logfile = 'debug.log'
@@ -79,8 +79,8 @@ def main():
     for key,value in marks.items():
         if key == "FDR/BTC" : # or key == "FDR_OLD/BTC"
             crypto_fdr = value
-            print(crypto_fdr)
-            # print(json.dumps(value, indent=4))
+            # print(crypto_fdr)
+            print(json.dumps(value, indent=4))
         else:
             pass
     import asyncio
@@ -89,7 +89,13 @@ def main():
         'apiKey': data["api_key"],
         'secret': data["api_secret"],
     })
-
+    import time
+    delay = 2 # seconds
+    for symbol in exchange.markets:
+        print (exchange.fetch_order_book (symbol))
+        time.sleep (delay) # rate limit
+    # if (exchange.has['fetchTickers']):
+    #     print(exchange.fetch_tickers(['ETH/BTC', 'LTC/BTC']))
 
 
 if __name__ == '__main__':
